@@ -8,9 +8,9 @@ interface NetworkStackProps extends cdk.StackProps {
 
 export default class NetworkStack extends cdk.Stack {
   public readonly vpc: ec2.Vpc;
-  public readonly publicSubnets: cdk.aws_ec2.ISubnet[];
-  public readonly privateWebSubnets: cdk.aws_ec2.ISubnet[];
-  public readonly privateDbSubnets: cdk.aws_ec2.ISubnet[];
+  public readonly publicSubnets: cdk.aws_ec2.SelectedSubnets;
+  public readonly privateWebSubnets: cdk.aws_ec2.SelectedSubnets;
+  public readonly privateDbSubnets: cdk.aws_ec2.SelectedSubnets;
 
   constructor(scope: Construct, id: string, props: NetworkStackProps) {
     const { stackName } = props;
@@ -43,8 +43,8 @@ export default class NetworkStack extends cdk.Stack {
     });
 
     this.vpc = vpc;
-    this.publicSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PUBLIC }).subnets;
-    this.privateWebSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED }).subnets;
-    this.privateDbSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED }).subnets;
+    this.publicSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PUBLIC });
+    this.privateWebSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED });
+    this.privateDbSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED });
   }
 }
