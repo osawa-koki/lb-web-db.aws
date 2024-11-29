@@ -84,6 +84,15 @@ export default class NetworkStack extends cdk.Stack {
       securityGroups: [endpointSecurityGroup],
     });
 
+    new ec2.InterfaceVpcEndpoint(this, 'SecretsManagerEndpoint', {
+      vpc,
+      service: ec2.InterfaceVpcEndpointAwsService.SECRETS_MANAGER,
+      subnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      securityGroups: [endpointSecurityGroup],
+    });
+
     this.vpc = vpc;
     this.publicSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PUBLIC });
     this.privateWebSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED });
