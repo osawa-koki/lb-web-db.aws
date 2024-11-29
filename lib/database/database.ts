@@ -31,6 +31,7 @@ export default class DatabaseStack extends cdk.Stack {
         secretName: process.env.AURORA_CREDENTIALS_SECRET_NAME!,
       }),
       deletionProtection: false,
+      defaultDatabaseName: process.env.AURORA_DATABASE_NAME!,
       writer: rds.ClusterInstance.provisioned("Writer", {
         instanceType: ec2.InstanceType.of(
           ec2.InstanceClass.T3,
