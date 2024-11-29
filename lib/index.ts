@@ -2,6 +2,8 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
 import NetworkStack from './network/network';
+import DatabaseStack from './database/database';
+import ComputeStack from './compute/compute';
 
 export class IndexStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -10,8 +12,25 @@ export class IndexStack extends cdk.Stack {
       stackName: process.env.BASE_STACK_NAME!,
     });
 
-    new NetworkStack(this, 'NetworkStack', {
+    const networkStack = new NetworkStack(this, 'NetworkStack', {
       stackName: `${process.env.BASE_STACK_NAME!}-network`,
     });
+
+    const databaseStack = new DatabaseStack(this, 'DatabaseStack', {
+      stackName: `${process.env.BASE_STACK_NAME!}-database`,
+      vpc: networkStack.vpc,
+      privateWebSubnets: networkStack.privateWebSubnets,
+      privateDbSubnets: networkStack.privateDbSubnets,
+    });
+    databaseStack.addDependency(networkStack);
+
+    const computeStack = new ComputeStack(this, 'ComputeStack', {
+      stackName: `${process.env.BASE_STACK_NAME!}-compute`,
+      vpc: networkStack.vpc,
+      privateWebSubnets: networkStack.privateWebSubnets,
+      databaseSecret: databaseStack.aurora.secret!,
+    });
+    computeStack.addDependency(networkStack);
+    computeStack.addDependency(databaseStack);
   }
 }
