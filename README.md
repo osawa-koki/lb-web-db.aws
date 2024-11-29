@@ -42,12 +42,13 @@ ALB_ENDPOINT=$(aws cloudformation describe-stacks --stack-name ${BASE_STACK_NAME
 echo "ALB_ENDPOINT: ${ALB_ENDPOINT}"
 
 # ローカルからALBにアクセスするためのプロキシを立てる場合は、以下のコマンドを実行して下さい。
-socat TCP-LISTEN:80,bind=0.0.0.0,reuseaddr,fork TCP:${ALB_ENDPOINT}:80
+socat TCP-LISTEN:8000,bind=0.0.0.0,reuseaddr,fork TCP:${ALB_ENDPOINT}:80
 ```
 
 ---
 
 踏み台サーバを経由してDBサーバにアクセスする場合は、以下の手順を実行して下さい。  
+※ DDL(テーブル作成等)で必要です。  
 
 まずは、Session Managerプラグインをインストールします。  
 
@@ -69,5 +70,13 @@ rm session-manager-plugin.deb
 以下のコマンドで接続します。  
 
 ```shell
-./connect.sh
+./rds_connect.sh
 ```
+
+これにより、ローカルからDBサーバにアクセスできるようになります。  
+必要なSQLを実行して、セットアップを行ってください。  
+
+---
+
+`http://localhost:8000`にアクセスすると、Webサーバにアクセスできます。  
+必要なリクエストを送信して、動作確認を行ってください。  
