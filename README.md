@@ -2,6 +2,10 @@
 
 🐣🐣🐣 「ロードバランサー」「Webサーバー」「DBサーバー」のAWS環境を構築してみる！  
 
+[![ci](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/ci.yml/badge.svg)](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/ci.yml)
+[![cd](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/cd.yml/badge.svg)](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/cd.yml)
+[![Dependabot Updates](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/dependabot/dependabot-updates)
+
 ## 実行方法
 
 `.env.example`をコピーして`.env`ファイルを作成します。  
