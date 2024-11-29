@@ -32,7 +32,24 @@ GitHub Actionsでデプロイするためには、以下のシークレットを
 
 ## デプロイ後の確認
 
-Session Managerプラグインをインストールします。  
+以下のコマンドでALBのDNS名を取得します。  
+
+```shell
+source .env
+
+ALB_ENDPOINT=$(aws cloudformation describe-stacks --stack-name ${BASE_STACK_NAME}-output --query 'Stacks[0].Outputs[?OutputKey==`LoadBalancerDnsName`].OutputValue' --output text)
+
+echo "ALB_ENDPOINT: ${ALB_ENDPOINT}"
+
+# ローカルからALBにアクセスするためのプロキシを立てる場合は、以下のコマンドを実行して下さい。
+socat TCP-LISTEN:80,bind=0.0.0.0,reuseaddr,fork TCP:${ALB_ENDPOINT}:80
+```
+
+---
+
+踏み台サーバを経由してDBサーバにアクセスする場合は、以下の手順を実行して下さい。  
+
+まずは、Session Managerプラグインをインストールします。  
 
 ```shell
 # MacOSの場合
@@ -49,4 +66,8 @@ dpkg -i session-manager-plugin.deb
 rm session-manager-plugin.deb
 ```
 
-TODO!!!!!  
+以下のコマンドで接続します。  
+
+```shell
+./connect.sh
+```
