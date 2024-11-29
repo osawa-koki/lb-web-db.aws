@@ -13,6 +13,7 @@
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/aws-cli:1": {}
   },
@@ -21,7 +22,7 @@
   "forwardPorts": [80, 3306],
 
   // Uncomment the next line to run commands after the container is created.
-  "postCreateCommand": "cat /etc/os-release && node --version && npm install && chmod +x ./connect.sh",
+  "postCreateCommand": "cat /etc/os-release && node --version && npm install && chmod +x ./rds_connect.sh",
 
   // Configure tool-specific properties.
   "customizations": {
