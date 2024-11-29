@@ -52,6 +52,7 @@ export default class NetworkStack extends cdk.Stack {
       ec2.Port.tcp(443)
     );
 
+    // ECRのVPCエンドポイント
     new ec2.InterfaceVpcEndpoint(this, 'ECRApiEndpoint', {
       vpc,
       subnets: {
@@ -60,7 +61,6 @@ export default class NetworkStack extends cdk.Stack {
       service: ec2.InterfaceVpcEndpointAwsService.ECR,
       securityGroups: [endpointSecurityGroup],
     });
-
     new ec2.InterfaceVpcEndpoint(this, 'ECRDkrEndpoint', {
       vpc,
       subnets: {
@@ -69,12 +69,12 @@ export default class NetworkStack extends cdk.Stack {
       service: ec2.InterfaceVpcEndpointAwsService.ECR_DOCKER,
       securityGroups: [endpointSecurityGroup],
     });
-
     new ec2.GatewayVpcEndpoint(this, 'S3Endpoint', {
       vpc,
       service: ec2.GatewayVpcEndpointAwsService.S3,
     });
 
+    // CloudWatchLogsのVPCエンドポイント
     new ec2.InterfaceVpcEndpoint(this, 'CloudWatchLogsEndpoint', {
       vpc,
       service: ec2.InterfaceVpcEndpointAwsService.CLOUDWATCH_LOGS,
@@ -84,12 +84,39 @@ export default class NetworkStack extends cdk.Stack {
       securityGroups: [endpointSecurityGroup],
     });
 
+    // SecretsManagerのVPCエンドポイント
     new ec2.InterfaceVpcEndpoint(this, 'SecretsManagerEndpoint', {
       vpc,
       service: ec2.InterfaceVpcEndpointAwsService.SECRETS_MANAGER,
       subnets: {
         subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
       },
+      securityGroups: [endpointSecurityGroup],
+    });
+
+    // SSMのVPCエンドポイント
+    new ec2.InterfaceVpcEndpoint(this, 'SSMEndpoint', {
+      vpc,
+      subnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      service: ec2.InterfaceVpcEndpointAwsService.SSM,
+      securityGroups: [endpointSecurityGroup],
+    });
+    new ec2.InterfaceVpcEndpoint(this, 'EC2MessagesEndpoint', {
+      vpc,
+      subnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      service: ec2.InterfaceVpcEndpointAwsService.EC2_MESSAGES,
+      securityGroups: [endpointSecurityGroup],
+    });
+    new ec2.InterfaceVpcEndpoint(this, 'SSMMessageEndpoint', {
+      vpc,
+      subnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      service: ec2.InterfaceVpcEndpointAwsService.SSM_MESSAGES,
       securityGroups: [endpointSecurityGroup],
     });
 
