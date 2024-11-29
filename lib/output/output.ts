@@ -11,7 +11,7 @@ export default class OutputStack extends cdk.Stack {
   public readonly fargateService: ecsPatterns.ApplicationLoadBalancedFargateService;
 
   constructor(scope: Construct, id: string, props: OutputStackProps) {
-    const { stackName } = props;
+    const { stackName, fargateService } = props;
 
     super(scope, id, {
       ...props,
@@ -19,7 +19,7 @@ export default class OutputStack extends cdk.Stack {
     });
 
     new cdk.CfnOutput(this, 'LoadBalancerDnsName', {
-      value: this.fargateService.loadBalancer.loadBalancerDnsName,
+      value: fargateService.loadBalancer.loadBalancerDnsName,
     });
   }
 }
