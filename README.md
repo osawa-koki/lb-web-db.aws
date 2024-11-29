@@ -8,6 +8,28 @@
 
 ![成果物](./fruit.gif)  
 
+## 技術スタック
+
+- AWS CDK
+  - TypeScript
+  - CloudFormation
+- AWS CLI
+- ELB
+  - ALB
+- EC2
+  - Session Manager
+- RDS
+  - Aurora
+  - MySQL
+- ECS
+  - Fargate
+  - Auto Scaling
+  - (ECR)
+- VPCエンドポイント
+  - ECRエンドポイント
+  - SSMエンドポイント
+  - Secrets Managerエンドポイント
+
 ## 実行方法
 
 `.env.example`をコピーして`.env`ファイルを作成します。  
