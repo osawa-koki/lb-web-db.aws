@@ -4,6 +4,7 @@ import { Construct } from 'constructs';
 import NetworkStack from './network/network';
 import DatabaseStack from './database/database';
 import ComputeStack from './compute/compute';
+import OutputStack from './output/output';
 
 export class IndexStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -32,5 +33,11 @@ export class IndexStack extends cdk.Stack {
     });
     computeStack.addDependency(networkStack);
     computeStack.addDependency(databaseStack);
+
+    const outputStack = new OutputStack(this, 'OutputStack', {
+      stackName: `${process.env.BASE_STACK_NAME!}-output`,
+      fargateService: computeStack.fargateService,
+    });
+    outputStack.addDependency(computeStack);
   }
 }
