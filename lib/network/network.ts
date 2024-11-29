@@ -42,6 +42,57 @@ export default class NetworkStack extends cdk.Stack {
       ],
     });
 
+    const endpointSecurityGroup = new ec2.SecurityGroup(this, 'EndpointSecurityGroup', {
+      vpc,
+      allowAllOutbound: true,
+      description: 'Security group for VPC endpoint',
+    });
+    endpointSecurityGroup.addIngressRule(
+      ec2.Peer.ipv4(vpc.vpcCidrBlock),
+      ec2.Port.tcp(443)
+    );
+
+    new ec2.InterfaceVpcEndpoint(this, 'ECRApiEndpoint', {
+      vpc,
+      subnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      service: ec2.InterfaceVpcEndpointAwsService.ECR,
+      securityGroups: [endpointSecurityGroup],
+    });
+
+    new ec2.InterfaceVpcEndpoint(this, 'ECRDkrEndpoint', {
+      vpc,
+      subnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      service: ec2.InterfaceVpcEndpointAwsService.ECR_DOCKER,
+      securityGroups: [endpointSecurityGroup],
+    });
+
+    new ec2.GatewayVpcEndpoint(this, 'S3Endpoint', {
+      vpc,
+      service: ec2.GatewayVpcEndpointAwsService.S3,
+    });
+
+    new ec2.InterfaceVpcEndpoint(this, 'CloudWatchLogsEndpoint', {
+      vpc,
+      service: ec2.InterfaceVpcEndpointAwsService.CLOUDWATCH_LOGS,
+      subnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      securityGroups: [endpointSecurityGroup],
+    });
+
+    new ec2.InterfaceVpcEndpoint(this, 'SecretsManagerEndpoint', {
+      vpc,
+      service: ec2.InterfaceVpcEndpointAwsService.SECRETS_MANAGER,
+      subnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      securityGroups: [endpointSecurityGroup],
+    });
+
     this.vpc = vpc;
     this.publicSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PUBLIC });
     this.privateWebSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED });
