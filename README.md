@@ -2,7 +2,33 @@
 
 🐣🐣🐣 「ロードバランサー」「Webサーバー」「DBサーバー」のAWS環境を構築してみる！  
 
+[![ci](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/ci.yml/badge.svg)](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/ci.yml)
+[![cd](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/cd.yml/badge.svg)](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/cd.yml)
+[![Dependabot Updates](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/osawa-koki/lb-web-db.aws/actions/workflows/dependabot/dependabot-updates)
+
 ![成果物](./fruit.gif)  
+
+## 技術スタック
+
+- AWS CDK
+  - TypeScript
+  - CloudFormation
+- AWS CLI
+- ELB
+  - ALB
+- EC2
+  - Session Manager
+- RDS
+  - Aurora
+  - MySQL
+- ECS
+  - Fargate
+  - Auto Scaling
+  - (ECR)
+- VPCエンドポイント
+  - ECRエンドポイント
+  - SSMエンドポイント
+  - Secrets Managerエンドポイント
 
 ## 実行方法
 
