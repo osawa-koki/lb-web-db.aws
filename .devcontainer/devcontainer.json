@@ -21,7 +21,7 @@
   "forwardPorts": [80, 3306],
 
   // Uncomment the next line to run commands after the container is created.
-  "postCreateCommand": "cat /etc/os-release && node --version && npm install && chmod +x ./connect.sh",
+  "postCreateCommand": "cat /etc/os-release && node --version && npm install && chmod +x ./rds_connect.sh",
 
   // Configure tool-specific properties.
   "customizations": {

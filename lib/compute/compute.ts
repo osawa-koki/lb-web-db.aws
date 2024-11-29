@@ -63,6 +63,7 @@ export default class ComputeStack extends cdk.Stack {
         DB_PORT: ecs.Secret.fromSecretsManager(databaseSecret, 'port'),
         DB_USER: ecs.Secret.fromSecretsManager(databaseSecret, 'username'),
         DB_PASSWORD: ecs.Secret.fromSecretsManager(databaseSecret, 'password'),
+        DB_DATABASE: ecs.Secret.fromSecretsManager(databaseSecret, 'dbname'),
       },
     });
 
