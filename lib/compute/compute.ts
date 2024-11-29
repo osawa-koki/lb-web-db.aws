@@ -71,7 +71,6 @@ export default class ComputeStack extends cdk.Stack {
     });
 
     const fargateService = new ecsPatterns.ApplicationLoadBalancedFargateService(this, 'FargateService', {
-      vpc,
       taskSubnets: privateWebSubnets,
       cluster,
       taskDefinition,
